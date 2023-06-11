@@ -1,12 +1,21 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <HeaderPage v-if="!this.$route.meta.hideHeader" />
   <router-view />
+  <FooterPage v-if="!this.$route.meta.hideFooter" />
 </template>
-
+<script>
+import HeaderPage from "@/components/global/HeaderPage.vue";
+import FooterPage from "@/components/global/FooterPage.vue";
+export default {
+  name: "App",
+  components: {
+    HeaderPage,
+    FooterPage,
+  },
+};
+</script>
 <style>
+@import "@/assets/style/common.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
