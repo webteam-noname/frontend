@@ -127,8 +127,32 @@
 </template>
 
 <script>
+import userApi from "../api/userApi";
 export default {
   name: "MyPage",
+  data() {
+    return {};
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  mounted() {
+    if (!this.loggedIn) {
+      this.$router.push("/auth/login");
+    }
+    userApi.getUserContent().then(
+      (response) => {
+        console.log(response);
+        // this.content = response.data;
+      },
+      (error) => {
+        console.log(error);
+        // this.content = error.response.data.message;
+      }
+    );
+  },
 };
 </script>
 

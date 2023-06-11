@@ -28,7 +28,7 @@
         비밀번호 변경
       </button>
     </form>
-    <form @submit.prevent="findPw" v-else>
+    <form @submit.prevent="findPW" v-else>
       <div class="form-floating mb-3">
         <input
           type="email"
@@ -57,6 +57,43 @@ export default {
       password: "",
       sendEmail: false,
     };
+  },
+  methods: {
+    findPW() {
+      if (this.username === "") {
+        alert("이메일을 입력해주세요.");
+        document.querySelector("#floatingInputEmail").focus();
+        return;
+      }
+      this.$store
+        .dispatch("auth/findPw", {
+          username: this.username,
+        })
+        .then(() => {
+          this.sendEmail = true;
+          alert("요청하신 메일로 인증번호를 보냈습니다.");
+        })
+        .catch((err) => {
+          alert("회원가입 정보가 없습니다.");
+          console.log(err);
+        });
+    },
+    resetPw() {
+      this.$store
+        .dispatch("auth/resetPw", {
+          username: this.username,
+          authCode: this.authCode,
+          password: this.password,
+        })
+        .then(() => {
+          alert("비밀번호가 변경되었습니다.");
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          alert("비밀번호 변경에 실패하였습니다.");
+          console.log(err);
+        });
+    },
   },
 };
 </script>

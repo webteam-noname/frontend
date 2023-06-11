@@ -120,7 +120,19 @@
 <script>
 export default {
   name: "HomeView",
-  components: {},
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  mounted() {
+    if (!this.loggedIn) {
+      this.$router.push("/auth/login");
+    }
+  },
 };
 </script>
 <style>

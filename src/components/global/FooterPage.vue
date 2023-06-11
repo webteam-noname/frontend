@@ -73,7 +73,7 @@
         </label>
       </li>
       <li>
-        <router-link to="/accounts/mypage">
+        <router-link to="/auth/myPage">
           <img
             src="@/assets/images/profile.jpg"
             alt="mdo"

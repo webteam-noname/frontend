@@ -8,6 +8,11 @@ import HeaderPage from "@/components/global/HeaderPage.vue";
 import FooterPage from "@/components/global/FooterPage.vue";
 export default {
   name: "App",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   components: {
     HeaderPage,
     FooterPage,

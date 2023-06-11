@@ -77,6 +77,16 @@ export default {
       password: "",
     };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push("/");
+    }
+  },
   methods: {
     login() {
       if (this.username === "") {
@@ -89,13 +99,13 @@ export default {
         return;
       }
       this.$store
-        .dispatch("login", {
+        .dispatch("auth/login", {
           username: this.username,
           password: this.password,
         })
         .then(() => {
           alert("로그인 되었습니다");
-          this.$router.push({ path: "/mypage" });
+          this.$router.push({ path: "/auth/MyPage" });
         })
         .catch((err) => {
           alert("아이디 비밀번호를 확인해주세요");

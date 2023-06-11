@@ -61,6 +61,42 @@ export default {
       password: "",
     };
   },
+  methods: {
+    signup() {
+      if (this.username === "") {
+        alert("이메일을 입력해주세요.");
+        document.querySelector("#floatingInputEmail").focus();
+        return;
+      } else if (this.name === "") {
+        alert("사용자 이름을 입력해주세요.");
+        document.querySelector("#floatingName").focus();
+        return;
+      } else if (this.profileName === "") {
+        alert("성명을 입력해주세요.");
+        document.querySelector("#floatingProfileName").focus();
+        return;
+      } else if (this.password === "") {
+        alert("비밀번호를 입력해주세요.");
+        document.querySelector("#floatingPassword").focus();
+        return;
+      }
+      this.$store
+        .dispatch("auth/register", {
+          username: this.username,
+          name: this.name,
+          profileName: this.profileName,
+          password: this.password,
+        })
+        .then(() => {
+          alert("회원가입이 완료되었습니다");
+          this.$router.push({ path: "/auth/login" });
+        })
+        .catch((err) => {
+          alert("회원가입에 실패하였습니다.");
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 
