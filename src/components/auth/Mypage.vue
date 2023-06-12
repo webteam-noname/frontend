@@ -2,11 +2,11 @@
   <div class="mypage">
     <div class="profileWrap">
       <div class="profilePicture">
-        <img src="@/assets/images/profile.jpg" alt="" />
+        <img :src="userInfo.profileImg" />
       </div>
       <div class="profileEdit">
         <h3>
-          아이디
+          {{ userInfo.profileName }}
           <a href="#none"
             ><svg
               aria-label="옵션"
@@ -41,7 +41,7 @@
         </h3>
         <button>프로필 편집</button>
       </div>
-      <div class="profileText">프로필내용</div>
+      <div class="profileText">{{ userInfo.profileIntro }}</div>
     </div>
     <div class="infoWrap">
       <ul>
@@ -131,7 +131,9 @@ import userApi from "../api/userApi";
 export default {
   name: "MyPage",
   data() {
-    return {};
+    return {
+      userInfo: "",
+    };
   },
   computed: {
     loggedIn() {
@@ -143,13 +145,11 @@ export default {
       this.$router.push("/auth/login");
     }
     userApi.getUserContent().then(
-      (response) => {
-        console.log(response);
-        // this.content = response.data;
+      (res) => {
+        this.userInfo = res.data.data;
       },
-      (error) => {
-        console.log(error);
-        // this.content = error.response.data.message;
+      (err) => {
+        console.log(err);
       }
     );
   },
@@ -167,8 +167,12 @@ export default {
   width: 100%;
 }
 .mypage .profileWrap > div.profilePicture {
-  width: 20%;
-  padding-right: 5%;
+  width: 77px;
+  height: 77px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 5%;
+  background: #efefef;
 }
 .mypage .profileWrap > div.profileEdit {
   width: 80%;
