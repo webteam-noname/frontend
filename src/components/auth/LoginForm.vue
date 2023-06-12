@@ -105,7 +105,7 @@ export default {
         })
         .then(() => {
           alert("로그인 되었습니다");
-          this.$router.push({ path: "/auth/MyPage" });
+          this.$router.push({ path: "/auth/myPage" });
         })
         .catch((err) => {
           alert("아이디 비밀번호를 확인해주세요");

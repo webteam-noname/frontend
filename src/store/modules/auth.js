@@ -10,14 +10,27 @@ export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
-    findPW({ commit }, user) {
-      return authApi.findPW(user).then(
+    resetPw({ commit }, user) {
+      return authApi.resetPw(user).then(
         (user) => {
           commit("SendEmailSuccess", user);
           return Promise.resolve(user);
         },
         (error) => {
           commit("SendEmailFailure");
+          return Promise.reject(error.response.data);
+        }
+      );
+    },
+
+    findPw({ commit }, user) {
+      return authApi.findPw(user).then(
+        (user) => {
+          commit("ChangePasswordSuccess", user);
+          return Promise.resolve(user);
+        },
+        (error) => {
+          commit("ChangePasswordFailure");
           return Promise.reject(error.response.data);
         }
       );
@@ -75,6 +88,12 @@ export const auth = {
       state.status = {};
     },
     SendEmailFailure(state) {
+      state.status = {};
+    },
+    ChangePasswordSuccess(state) {
+      state.status = {};
+    },
+    ChangePasswordFailure(state) {
       state.status = {};
     },
   },
