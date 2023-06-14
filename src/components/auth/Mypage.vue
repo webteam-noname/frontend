@@ -15,18 +15,24 @@
           <div>
             <span>프로필사진</span>
             <img :src="userInfo.profileImg" />
-            <input type="file" name="profileImg" id="profileImg" />
+            <input
+              type="file"
+              name="profileImg"
+              id="profileImg"
+              v-on:change="fileSlc"
+            />
           </div>
           <div>
             <span>프로필명</span>
-            <input type="text" name="" id="" :value="userInfo.profileName" />
+            <input type="text" name="" id="" v-model="newProfileName" />
           </div>
           <div>
             <span>프로필 내용</span>
-            <input type="text" name="" id="" :value="userInfo.profileIntro" />
+            <!-- <textarea v-model="newProfileIntro"></textarea> -->
+            <input type="text" name="" id="" v-model="newProfileIntro" />
           </div>
         </div>
-        <button class="nav-link">수정</button>
+        <button class="nav-link" @click="editProfile">수정</button>
       </template>
     </CommonModal>
 
@@ -167,9 +173,33 @@ export default {
       userInfo: "",
       showModalSetting: false,
       showModalProfile: false,
+
+      newProfileImg: "",
+      newProfileName: "",
+      newProfileIntro: "",
     };
   },
   methods: {
+    fileSlc: function (event) {
+      let file = event.target.files[0];
+      this.newProfileImg = window.URL.createObjectURL(file);
+    },
+
+    editProfile() {
+      this.$store
+        .dispatch("auth/editProfile", {
+          profileImg: this.newProfileImg,
+          profileName: this.newProfileName,
+          profileIntro: this.newProfileIntro,
+        })
+        .then(() => {
+          alert("수정되었습니다.");
+        })
+        .catch((err) => {
+          alert("수정실패했습니다.");
+          console.log(err);
+        });
+    },
     logOut() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/auth/login");

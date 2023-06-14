@@ -1,11 +1,34 @@
 import axios from "axios";
 import VueCookies from "vue-cookies";
+import authHeader from "./authHeader";
 
 const API_URL = "http://192.168.101.182:8080";
+const USER_INFO = "test0";
 
 class AuthService {
+  editProfile(user) {
+    console.log(user.profileIntro);
+    return (
+      axios
+        .put(
+          `${API_URL}/api/accounts/${USER_INFO}/profile`,
+          {
+            profileImg: user.profileImg,
+            profileName: user.profileName,
+            profileIntro: user.profileIntro,
+          },
+          {
+            headers: authHeader(),
+          }
+        )
+        //   .then(this.handleResponse);
+        .then((response) => {
+          console.log(response);
+        })
+    );
+  }
+
   resetPw(user) {
-    console.log(user);
     return axios
       .put(API_URL + "/api/auth/accounts/password", {
         username: user.username,
@@ -19,7 +42,6 @@ class AuthService {
   }
 
   findPw(user) {
-    console.log(user);
     return axios
       .post(API_URL + "/api/auth/accounts/password/code", {
         username: user.username,

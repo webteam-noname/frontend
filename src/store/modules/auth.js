@@ -1,5 +1,4 @@
 import authApi from "@/components/api/authApi";
-// import axios from "axios";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
@@ -10,6 +9,22 @@ export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
+    editProfile({ commit }, user) {
+      return authApi.editProfile(user).then(
+        (user) => {
+          console.log(commit);
+          console.log(user);
+          //   commit("SendEmailSuccess", user);
+          //   return Promise.resolve(user);
+        },
+        (error) => {
+          console.log(error);
+          //   commit("SendEmailFailure");
+          //   return Promise.reject(error.response.data);
+        }
+      );
+    },
+
     resetPw({ commit }, user) {
       return authApi.resetPw(user).then(
         (user) => {
