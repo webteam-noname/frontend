@@ -1,6 +1,5 @@
 <template>
   <div class="mypage">
-    {{ userInfo }}
     <CommonModal v-if="showModalSetting" @close="showModalSetting = false">
       <template v-slot:body>
         <div v-if="currentUser">
@@ -194,6 +193,7 @@ export default {
         })
         .then(() => {
           alert("수정되었습니다.");
+          this.$router.go(0);
         })
         .catch((err) => {
           alert("수정실패했습니다.");
