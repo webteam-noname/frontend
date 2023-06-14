@@ -1,5 +1,35 @@
 <template>
   <div class="mypage">
+    {{ userInfo }}
+    <CommonModal v-if="showModalSetting" @close="showModalSetting = false">
+      <template v-slot:body>
+        <div v-if="currentUser">
+          <button class="nav-link" @click="logOut">로그아웃</button>
+        </div>
+      </template>
+    </CommonModal>
+
+    <CommonModal v-if="showModalProfile" @close="showModalProfile = false">
+      <template v-slot:body>
+        <div class="editProfileWrap">
+          <div>
+            <span>프로필사진</span>
+            <img :src="userInfo.profileImg" />
+            <input type="file" name="profileImg" id="profileImg" />
+          </div>
+          <div>
+            <span>프로필명</span>
+            <input type="text" name="" id="" :value="userInfo.profileName" />
+          </div>
+          <div>
+            <span>프로필 내용</span>
+            <input type="text" name="" id="" :value="userInfo.profileIntro" />
+          </div>
+        </div>
+        <button class="nav-link">수정</button>
+      </template>
+    </CommonModal>
+
     <div class="profileWrap">
       <div class="profilePicture">
         <img :src="userInfo.profileImg" />
@@ -7,7 +37,7 @@
       <div class="profileEdit">
         <h3>
           {{ userInfo.profileName }}
-          <a href="#none"
+          <span @click="showModalSetting = true"
             ><svg
               aria-label="옵션"
               class="x1lliihq x1n2onr6"
@@ -37,9 +67,9 @@
                 stroke-width="2"
               ></path>
             </svg>
-          </a>
+          </span>
         </h3>
-        <button>프로필 편집</button>
+        <button @click="showModalProfile = true">프로필 편집</button>
       </div>
       <div class="profileText">{{ userInfo.profileIntro }}</div>
     </div>
@@ -128,16 +158,29 @@
 
 <script>
 import userApi from "../api/userApi";
+import CommonModal from "@/components/common/CommonModal.vue";
+
 export default {
   name: "MyPage",
   data() {
     return {
       userInfo: "",
+      showModalSetting: false,
+      showModalProfile: false,
     };
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/auth/login");
+    },
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
+    },
+    currentUser() {
+      return this.$store.state.auth.user;
     },
   },
   mounted() {
@@ -153,10 +196,17 @@ export default {
       }
     );
   },
+  components: {
+    CommonModal,
+  },
 };
 </script>
 
 <style>
+button {
+  cursor: pointer;
+  display: inline-block;
+}
 .mypage .profileWrap {
   display: flex;
   margin: 3%;
@@ -228,5 +278,21 @@ export default {
 .mypage .infoWrap ul li span {
   display: block;
   font-weight: bold;
+}
+.mypage .nav-link {
+  display: block;
+  width: 100%;
+}
+.editProfileWrap > div {
+  margin-bottom: 15px;
+}
+.editProfileWrap > div > span {
+  display: block;
+  font-size: 13px;
+  color: #aaa;
+}
+.editProfileWrap > div input {
+  font-size: 13px;
+  border: 1px solid #ddd;
 }
 </style>
