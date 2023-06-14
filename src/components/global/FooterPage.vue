@@ -75,7 +75,7 @@
       <li>
         <router-link to="/auth/myPage">
           <img
-            :src="userInfo.profileImg"
+            src="@/assets/images/profile.jpg"
             width="32"
             height="32"
             class="rounded-circle"
@@ -87,24 +87,12 @@
 </template>
 
 <script>
-import userApi from "../api/userApi";
 export default {
   name: "FooterPage",
   data() {
-    return {
-      userInfo: "",
-    };
+    return {};
   },
-  mounted() {
-    userApi.getUserContent().then(
-      (res) => {
-        this.userInfo = res.data.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  },
+  mounted() {},
 };
 </script>
 

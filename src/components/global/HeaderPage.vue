@@ -1,10 +1,5 @@
 <template>
   <div class="header">
-    <div v-if="currentUser">
-      <a href class="nav-link" @click="logOut">
-        <font-awesome-icon icon="sign-out-alt" /> LogOut
-      </a>
-    </div>
     <router-link to="/"
       ><img src="@/assets/images/logo.png" class="logo"
     /></router-link>
@@ -58,17 +53,6 @@
 <script>
 export default {
   name: "HeaderPage",
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-  },
-  methods: {
-    logOut() {
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/auth/login");
-    },
-  },
 };
 </script>
 
