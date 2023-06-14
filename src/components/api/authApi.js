@@ -50,16 +50,8 @@ class AuthService {
         if (response.data.data.jwt.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
           // 로그인 성공시 쿠키에 토큰저장
-          VueCookies.set(
-            "accessToken",
-            response.data.data.jwt.accessToken,
-            "30m"
-          );
-          VueCookies.set(
-            "refreshToken",
-            response.data.data.jwt.refreshToken,
-            "24h"
-          );
+          VueCookies.set("accessToken", response.data.data.jwt.accessToken);
+          VueCookies.set("refreshToken", response.data.data.jwt.refreshToken);
         }
         return response.data;
       });
