@@ -9,6 +9,38 @@ export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
+    delFollows({ commit }, user) {
+      return authApi.delFollows(user).then(
+        (user) => {
+          console.log(commit);
+          console.log(user);
+          //   commit("SendEmailSuccess", user);
+          //   return Promise.resolve(user);
+        },
+        (error) => {
+          console.log(error);
+          //   commit("SendEmailFailure");
+          //   return Promise.reject(error.response.data);
+        }
+      );
+    },
+
+    delFollowers({ commit }, user) {
+      return authApi.delFollowers(user).then(
+        (user) => {
+          console.log(commit);
+          console.log(user);
+          //   commit("SendEmailSuccess", user);
+          //   return Promise.resolve(user);
+        },
+        (error) => {
+          console.log(error);
+          //   commit("SendEmailFailure");
+          //   return Promise.reject(error.response.data);
+        }
+      );
+    },
+
     editProfile({ commit }, user) {
       return authApi.editProfile(user).then(
         (user) => {

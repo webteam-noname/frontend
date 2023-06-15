@@ -3,19 +3,73 @@ import VueCookies from "vue-cookies";
 import authHeader from "./authHeader";
 
 const API_URL = "http://192.168.101.182:8080";
-const USER_INFO = "test0";
+const ProfileName = "test0";
 
 class AuthService {
+  delFollows(user) {
+    return (
+      axios
+        .delete(
+          `${API_URL}/api/follows/${ProfileName}`,
+          {
+            headers: authHeader(),
+            data: {
+              profileName: ProfileName,
+              followName: user.followName.followName,
+            },
+          }
+          //   {
+          //     profileName: user.profileName,
+          //     followName: user.followName,
+          //   },
+          //   {
+          //     headers: authHeader(),
+          //   }
+        )
+        //   .then(this.handleResponse);
+        .then((response) => {
+          console.log(response);
+        })
+    );
+  }
+  delFollowers(user) {
+    return (
+      axios
+        .delete(
+          `${API_URL}/api/follows/${ProfileName}`,
+          {
+            headers: authHeader(),
+            data: {
+              profileName: user.followName.profileName,
+              followName: ProfileName,
+            },
+          }
+          //   {
+          //     profileName: user.profileName,
+          //     followName: user.followName,
+          //   },
+          //   {
+          //     headers: authHeader(),
+          //   }
+        )
+        //   .then(this.handleResponse);
+        .then((response) => {
+          console.log(response);
+        })
+    );
+  }
+
   editProfile(user) {
-    console.log(user.profileIntro);
     return (
       axios
         .put(
-          `${API_URL}/api/accounts/${USER_INFO}/profile`,
+          `${API_URL}/api/accounts/${ProfileName}/profile`,
           {
-            profileImg: user.profileImg,
             profileName: user.profileName,
+            changeProfileName: user.changeProfileName,
             profileIntro: user.profileIntro,
+            profileImgFileId: user.profileImgFileId,
+            file: user.file,
           },
           {
             headers: authHeader(),

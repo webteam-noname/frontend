@@ -86,11 +86,11 @@
         </li>
         <li>
           팔로워
-          <span>108</span>
+          <FollowersView />
         </li>
         <li>
           팔로우
-          <span>106</span>
+          <FollowsView />
         </li>
       </ul>
     </div>
@@ -164,6 +164,8 @@
 <script>
 import userApi from "../api/userApi";
 import CommonModal from "@/components/common/CommonModal.vue";
+import FollowsView from "@/components/FollowsView.vue";
+import FollowersView from "@/components/FollowersView.vue";
 
 export default {
   name: "MyPage",
@@ -187,9 +189,11 @@ export default {
     editProfile() {
       this.$store
         .dispatch("auth/editProfile", {
-          profileImg: this.newProfileImg,
-          profileName: this.newProfileName,
+          profileName: this.userInfo.profileName,
+          changeProfileName: this.newProfileName,
           profileIntro: this.newProfileIntro,
+          profileImgFileId: this.userInfo.profileImgFileId,
+          file: this.newProfileImg,
         })
         .then(() => {
           alert("수정되었습니다.");
@@ -228,6 +232,8 @@ export default {
   },
   components: {
     CommonModal,
+    FollowersView,
+    FollowsView,
   },
 };
 </script>
@@ -312,6 +318,7 @@ button {
 .mypage .nav-link {
   display: block;
   width: 100%;
+  padding: 20px 0;
 }
 .editProfileWrap > div {
   margin-bottom: 15px;

@@ -53,18 +53,19 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
 }
-.modal-body,
-.modal-footer {
-  padding: 20px 0;
+.modal-body {
   text-align: center;
   border-bottom: 1px solid #efefef;
 }
-
+.modal-footer {
+  text-align: center;
+}
 .modal-default-button {
   float: right;
 }
